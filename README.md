@@ -152,3 +152,42 @@ CMakeCache.txt
 ### Academic Integrity
 
 If any violations are found during evaluation or code review (including but not limited to using unconventional methods to pass test cases), your final score may be significantly reduced or become **0 points**.
+
+## Solution Summary
+
+### Submission Results
+- **First Submission**: Score 100/100 (Accepted)
+- **Submission ID**: 767051
+- **Test Cases**: All 20 test points passed
+- **Time**: Max 614ms (well within 1500ms limit)
+- **Memory**: Max ~47MB (well within 244MB limit)
+
+### Algorithm Overview
+The solution uses an efficient O(D) algorithm to simulate the falling balls:
+
+1. **Count Ball Distribution**: Calculate how many balls pass through each node in the binary tree
+   - Root receives all n balls
+   - For each internal node: balls alternate between left (odd positions) and right (even positions)
+   - Left child gets ⌈balls/2⌉, right child gets ⌊balls/2⌋
+
+2. **Determine Final States**: 
+   - Each node's final state is determined by the parity of balls that passed through it
+   - Odd number of passes → ON (1)
+   - Even number of passes → OFF (0)
+
+3. **Trace Last Ball's Path**:
+   - Start at root and follow the path the last ball would take
+   - At each node, check the state BEFORE the last ball arrives
+   - If closed (before), go left; if open (before), go right
+   - Continue until reaching a leaf node
+
+### Key Insights
+- Direct simulation would be O(n·D) which is too slow for n up to 10^9
+- Mathematical counting approach reduces complexity to O(D)
+- Only need to track ball counts, not simulate each ball individually
+- The last ball's path depends on the state after (n-1) balls
+
+### Files
+- `main.cpp`: Main solution implementation
+- `CMakeLists.txt`: CMake build configuration
+- `.gitignore`: Git ignore rules for build artifacts
